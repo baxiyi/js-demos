@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Promise</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<script type="text/javascript">
+	function myPromise(excutor){
+		let self=this;
+		self.status='pending';
+		self.value=null;
+		self.reason=null;
+		self.onFulfilledCallbacks=[];
+		self.onRejectedCallbacks=[];
+		function resolve(value){
+			if(self.status==='pending'){
+				self.value=value;
+				self.status='fulfilled';
+				self.onFulfilledCallbacks.forEach(item=>item(self.value));
+			}
+		}
+		function reject(reason){
+			if(self.status==='pending'){
+				self.reason=reason;
+				self.status='rejected';
+				self.onRejectedCallbacks.forEach(item=>item(self.reason));
+			}
+		}
+		try{
+			excutor(resolve,reject);
+		}catch(e){
+			reject(e);
+		}
+	}
+	myPromise.prototype.then=function(onFulfilled,onRejected){
+		onFulfilled=typeof onFulfilled===='function'?onFulfilled:function(data){resolve(data)};
+		onRejected=typeof onRejected==='function'?onRejected:function(data){reject(data)};
+		let self=this;
+		if(self.status==='fulfilled'){
+			return new myPromise((resolve,reject)=>{
+				try{
+					let x=onFulfilled(self.value);
+					if(x instanceof myPromise)
+						x.then(resolve,reject);
+					else
+						resolve(x);
+				}catch(err){
+					reject(err);
+				}
+			})
+		}
+		if(self.status==='rejected'){
+			return new myPromise((resolve,reject)=>{
+				try{
+					let x=onRejected(self.reason);
+					if(x instanceof myPromise)
+						x.then(resolve,reject);
+					else
+						resolve(x);
+				}catch(err){
+					reject(err);
+				}
+			})
+		}
+		if(self.status==='pending'){
+			return new myPromise((resolve,reject)=>{
+				self.onFulfilledCallbacks.push(()=>{
+					let x=onFulfilled(self.value);
+					if(x instanceof myPromise)
+						x.then(resolve,reject);
+					else
+						resolve(x);
+				});	
+				self.onRejectedCallbacks.push(()=>{
+					let x=onRejected(self.value);
+					if(x instanceof myPromise)
+						x.then(resolve,reject);
+					else
+						resolve(x);
+				});
+			})
+		}
+	}
+	</script>
+</body>
+</html>

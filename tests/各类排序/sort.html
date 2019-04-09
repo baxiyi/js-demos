@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>sort</title>
+	<meta charset="utf-8">
+</head>
+<body>
+<script type="text/javascript">
+	//快速排序
+	function quickSort(nums){
+		sortHelper(0,nums.length-1,nums);
+		return nums;
+	}
+	function sortHelper(low,high,nums){
+		if(low>=high)
+			return;
+		let v=partition(low,high,nums);
+		sortHelper(low,v-1,nums);
+		sortHelper(v+1,high,nums);
+	}
+	function partition(low,high,nums){
+		let v=nums[low];
+		let i=low,j=high;
+		while(i<j){
+			while(i<j&&nums[j]>v)
+				j--;
+			nums[i]=nums[j];
+			while(i<j&&nums[i]<v)
+				i++;
+			nums[j]=nums[i];
+		}
+		nums[i]=v;
+		return i;
+	}
+
+	//冒泡排序
+	function bubbleSort(nums){
+		for(let i=0;i<nums.length-1;i++){
+			for(let j=0;j<nums.length-1-i;j++){
+				if(nums[j+1]<nums[j]){
+					let temp=nums[j+1];
+					nums[j+1]=nums[j];
+					nums[j]=temp;
+				}
+			}
+		}
+		return nums;
+	}
+
+	//选择排序
+	function selectSort(nums){
+		for(let i=0;i<nums.length-1;i++){
+			let minIndex=i;
+			for(let j=i+1;j<nums.length;j++){
+				if(nums[j]<nums[minIndex])
+					minIndex=j;
+			}
+			if(minIndex!=i){
+				let temp=nums[i];
+				nums[i]=nums[minIndex];
+				nums[minIndex]=temp;
+			}
+		}
+		return nums;
+	}
+	//直接插入排序
+	function insertSort(nums){
+		for(let i=1;i<nums.length;i++){
+			let temp=nums[i];
+			let j=0;
+			for(j=i-1;j>=0;j--){
+				if(nums[j]>temp)
+					nums[j+1]=nums[j];
+				else
+					break;
+			}
+			nums[j+1]=temp;
+		}
+		return nums;
+	}
+
+	//二分插入排序
+	function BinaryInsertSort(nums){
+		for(let i=1;i<nums.length;i++){
+			let temp=nums[i];
+			let low=0,high=i-1;
+			let mid=0;
+			while(low<=high){
+				mid=Math.floor((low+high)/2);
+				if(temp<nums[mid])
+					high=mid-1;
+				else
+					low=mid+1;
+			}
+			for(let j=i-1;j>=low;j--){
+				nums[j+1]=nums[j];
+			}
+			nums[low]=temp;
+		}
+		return nums;
+	}
+
+	//希尔排序
+	//堆排序
+	function heapSort(nums){
+		//构造一个最大堆
+		for(let i=Math.floor(nums.length/2)-1;i>=0;i--)
+			adjust(nums,nums.length,i);
+		//依次交换最后一个元素和堆顶元素，并把剩下的元素重新调整
+		for(let i=nums.length-1;i>0;i--){
+			let temp=nums[i];
+			nums[i]=nums[0];
+			nums[0]=temp;
+			adjust(nums,i,0);
+		}
+		return nums;
+	}
+	function adjust(nums,len,i){
+		let left=i*2+1,right=i*2+2;
+		let maxIndex=i;
+		if(left<len&&nums[left]>nums[maxIndex])
+			maxIndex=left;
+		if(right<len&&nums[right]>nums[maxIndex])
+			maxIndex=right;
+		if(maxIndex!==i){
+			let temp=nums[maxIndex];
+			nums[maxIndex]=nums[i];
+			nums[i]=temp;
+			adjust(nums,maxIndex);
+		}
+	}
+	//归并排序
+	function mergeSort(nums){
+		mergeHelper(nums,0,nums.length-1);
+		return nums;
+	}
+	function mergeHelper(nums,low,high){
+		if(low>=high)
+			return;
+		let mid=Math.floor((low+high)/2);
+		mergeHelper(nums,low,mid);
+		mergeHelper(nums,mid+1,high);
+		mergeArray(nums,low,mid+1,high);
+	}
+	function mergeArray(nums,low,mid,high){
+		let left=nums.slice(low,mid),right=nums.slice(mid,high+1);
+		let i=0,j=0,k=low;
+		while(k<=high){
+			if(i+low>mid-1)
+				nums[k++]=right[j++];
+			else if(j+mid>high)
+				nums[k++]=left[i++];
+			else{
+				if(left[i]<right[j])
+					nums[k++]=left[i++];
+				else
+					nums[k++]=right[j++];
+			}
+
+		}
+	}
+
+	//基数排序
+	function radixSort(nums){
+		let radix=1;
+		while(true){
+			let temp=[];
+			for(let i=0;i<10;i++)
+				temp[i]=[];
+			for(let i=0;i<nums.length;i++){
+				let value=Math.floor(nums[i]/radix)%10;
+				temp[value].push(nums[i]);
+			}
+			if(temp[0].length===nums.length)
+				break;
+			let k=0;
+			for(let i=0;i<10;i++){
+				for(let j=0;j<temp[i].length;j++){
+					nums[k++]=temp[i][j];
+				}
+			}
+			radix=radix*10;
+		}
+		return nums;
+	}
+
+	//希尔排序
+	//分为m组，对每组进行二分插入排序
+	function shellSort(nums){
+		let m=nums.length;
+		while(true){
+			m=Math.floor(m/2);
+			for(let i=0;i<m;i++){
+				for(let j=i+m;j<nums.length;j+=m){
+					let temp=nums[j];
+					let low=i,high=j-m;
+					while(low<=high){
+						let mid=Math.floor(((low-i)/m+(high-i)/m)/2)+i;
+						if(nums[mid]<temp)
+							low+=m;
+						else
+							high-=m;
+					}
+					for(let k=j-m;k>=low;k-=m)
+						nums[k+m]=nums[k];
+					nums[low]=temp;
+				}
+			}
+			if(m===1)
+				break;
+		}
+		return nums;
+	}
+	let arr=[100,10,20,3,50,1000,6,9,200];
+	console.log(quickSort(arr));
+	console.log(bubbleSort(arr));
+	console.log(selectSort(arr));
+	console.log(insertSort(arr));
+	console.log(BinaryInsertSort(arr));
+	console.log(heapSort(arr));
+	console.log(mergeSort(arr));
+	console.log(radixSort(arr));
+	console.log(shellSort(arr));
+</script>
+</body>
+</html>

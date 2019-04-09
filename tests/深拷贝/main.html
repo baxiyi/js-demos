@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>main</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<script type="text/javascript">
+	alert(NaN===NaN);
+	function deepCopy(obj){
+		let res={};
+		for(let i in obj){
+			res[i] = typeof obj[i] === "object"?deepCopy(obj[i]):obj[i];
+		}
+		return res;
+	}
+	let obj={
+		name:"mze",
+		age:20,
+		colors:["red","blue"],
+		address:{
+			add1:"Heibei",
+			add2:"Dalian"
+		}
+	}
+	let copy=deepCopy(obj);
+	copy.name="mzw";
+	copy.age=10;
+	copy.colors[0]="yellow";
+	copy.address["add1"]="Julu";
+	console.log(obj);
+	console.log(copy);
+	</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>main</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<script type="text/javascript">
+	let nums=[6,4,8,10,5,7,9];
+	console.log(solve(nums));
+	
+	function Node(value){
+		this.value=value;
+		this.left=null;
+		this.right=null;
+	}
+	//通过BFS构造二叉树
+	function solve(nums){
+		let nodeList=[];
+		for(let i=0;i<nums.length;i++)
+			nodeList.push(new Node(nums[i]));
+		let root=nodeList[0];
+		for(let i=0;i<=Math.floor(nums.length/2)-1;i++){
+			nodeList[i].left=nodeList[2*i+1];
+			nodeList[i].right=nodeList[2*i+2];
+		}
+		let res=[];
+		midOrder(res,root);
+		console.log(res);
+		for(let i=1;i<res.length;i++){
+			if(res[i]<res[i-1])
+				return false;
+		}
+		return true;
+	}
+	function midOrder(res,node){
+		if(node!==null){
+			midOrder(res,node.left);
+			res.push(node.value);
+			midOrder(res,node.right);
+		}
+	}
+	</script>
+</body>
+</html>

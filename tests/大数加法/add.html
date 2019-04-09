@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<script type="text/javascript">
+	function add(s1,s2){
+		let len1=s1.length;
+		let len2=s2.length;
+		let res="";
+		let i=len1-1,j=len2-1;
+		let carry=0;
+		while(i>=0||j>=0){
+			let temp=0;
+			if(i<0)
+				temp=carry+parseInt(s2.charAt(j));
+			else if(j<0)
+				temp=carry+parseInt(s1.charAt(i));
+			else{
+				temp=carry+parseInt(s1.charAt(i))+parseInt(s2.charAt(j));
+			}
+			res=(temp%10).toString()+res;
+			carry=Math.floor(temp/10);
+			i--;
+			j--;
+		}
+		if(carry!=0)
+			res=carry.toString()+res;
+		return res;
+		
+	}
+	console.log(add("99999","454564564"));
+	</script>
+</body>
+</html>

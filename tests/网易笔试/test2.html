@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test2</title>
+	<meta charset="utf-8">
+</head>
+<body>
+<div class="content">
+	<span id="jsBlink">|</span>
+</div>
+<script type="text/javascript">
+function output(str) {
+    var chars=str.split("");
+	intervalId=setTimeout(solve,200,chars);
+}
+var i=0;
+function solve(chars){
+	var dis="";
+    var content=document.querySelector(".content");
+    var blink=document.querySelector("#jsBlink");
+    var temp=chars[i++];
+    if(temp===" ")
+        dis="&nbsp";
+    else if(temp==="<"||temp===">")
+        dis="\\"+temp;
+    else if(temp==="\\"&&chars[i+1]==="n"){
+    	i++;
+    	var br=document.createElement("br")
+    	content.insertBefore(br,blink);
+    	return;
+    }
+    else 
+        dis=temp;
+    display(dis);
+    if(i<chars.length)
+    	intervalId=setTimeout(solve,200,chars);
+}
+function display(dis){
+	var newspan=document.createElement("span");
+	newspan.innerHTML=dis;
+	var content=document.querySelector(".content");
+	var blink=document.querySelector("#jsBlink");
+	content.insertBefore(newspan,blink);
+}
+output("hello world你好");
+</script>
+</body>
+</html>

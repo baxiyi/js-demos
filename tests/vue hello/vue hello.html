@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vue hello</title>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+<div id="first">
+	<p v-if="seen">{{text}}</p>
+	<p>{{reverseText}}</p>
+</div>
+
+<ul id="second">
+	<li v-for="item in colors">{{item}}</li>
+</ul>
+<!--
+<div id="third" v-bind:class="{active:isActive}"></div>
+<div id="fourth" v-bind:style="styleObject"></div>
+<template v-if="ok">
+	<h1>title</h1>
+</template>
+<div v-if="bool1"></div>
+<div> v-else-if="bool2"</div>
+<div v-else="bool3"></div>
+-->
+<ul id="fifth">
+	<li v-for="(item,index) in filitems">
+		{{parentMessage}}-{{index}}-{{item.message}}
+	</li>
+	<li v-for="(item,key) in object">
+		{{key}}:{{item}}
+	</li>
+</ul>
+<div id="sixth"> 
+<button v-on:click.prevent="btnClick">click me</button>
+</div>
+<form id="seventh">
+	<input type="text" name="text" v-model="content" value="111111">
+	<p>{{content}}</p>
+	<input type="checkbox" name="checkbox" v-model="checked">
+	<p>{{checked}}</p>
+	<select v-model="selected" multiple>
+		<option selected>111</option>
+		<option>222</option>
+		<option>333</option>
+	</select>
+	<p>{{selected}}</p>
+</form>
+<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
