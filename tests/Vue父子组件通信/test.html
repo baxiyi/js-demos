@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+	<div id="main">
+		<p>{{title}}</p>
+		<base-input v-bind:label='label' v-model="label" v-bind:value="title"></base-input>
+	</div>
+	<script>
+		Vue.component('base-input',{
+			inheritAttrs:false,
+			props:['label','value'],
+			model:{
+				prop:'value',
+				event:'input'
+			},
+			computed:{
+				inputListeners:function(){
+					let vm=this;
+					return Object.assign({},
+						this.$listeners,
+						{
+							input:function(event){
+								vm.$emit('input',event.target.value);
+								vm.$emit('update:value',event.target.value);
+							}
+						}
+						)
+				}
+			},
+			template:`
+				<label>
+					{{label}}
+					<br>
+					<input v-bind="$attrs"
+						v-bind:value="value"
+						v-on="inputListeners"
+					>
+				</label>
+			`
+		})
+		const app=new Vue({
+			el:'#main',
+			data:{
+				label:'用户名',
+				title:'test'
+			},
+			methods:{
+				/*onchange:function(value){
+					this.value=value;
+					this.label=value;
+				}*/
+			}
+		})
+	</script>
+</body>
+</html>
