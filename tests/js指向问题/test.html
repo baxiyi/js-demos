@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+	<button id="btn"></button>
+	<script>
+		//直接调用:指向window
+		//let a=3;//不会绑定到window上
+		/*
+		var a=2;
+		
+		function fun(){
+			var a=1;
+			console.log(this.a);//2
+		}
+		fun();
+		*/
+		//方法调用:指向所属对象
+		/*
+		const obj={
+			fun1(){
+				console.log(this===obj);//true
+			}
+		}
+		obj.fun1();
+		*/
+		//事件函数中:指向事件的target
+		/*
+		let btn=document.querySelector("#btn");
+		btn.onclick=function(){
+			console.log(this===btn);
+		}*/
+		//new 调用:指向new创建的实例对象
+		/*
+		function Person(age){
+			this.age=age;
+		}
+		const obj=new Person(15);
+		console.log(obj.age);//15
+		*/
+		//箭头函数中的this:箭头函数没有自己的this，它的this指向它外面一层的函数
+		/*
+		const obj={
+			fun1(){
+				return ()=>{
+					console.log(this===obj);
+				}
+			}
+		}
+		let fun=obj.fun1();
+		fun();
+		*/
+		//通过bind,apply,call可以改变this的指向
+		/*
+		let obj={};
+		function fun(){
+			console.log(this===obj);
+		}
+		let fun1=fun.bind(obj);
+		fun1();
+		*/
+		
+		//plus:
+		//手写实现bind函数
+		Function.prototype.mybind = function(obj){
+			let args=[].slice.call(arguments,1);
+			let self=this;
+			return function(){
+				self.apply(obj,args.concat([].slice.apply(arguments)));
+			}
+		};
+		let obj={
+			a:1
+		}
+		function func(){
+			console.log(this.a);
+		}
+		let fun1=func.mybind(obj);
+		fun1();
+	</script>
+</body>
+</html>
