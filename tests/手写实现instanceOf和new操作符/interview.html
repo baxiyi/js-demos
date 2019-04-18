@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+	<meta charset="utf-8">
+</head>
+<body>
+<script type="text/javascript">
+//instanceOf操作符
+function myInstanceOf(left,right){
+	let rightProto=right.prototype;
+	let leftValue=left._proto_;
+	while(true){
+		if(leftValue===null)
+			return false;
+		if(leftValue===rightProto)
+			return true;
+		leftValue=leftValue._proto_;
+	}
+}
+//new 操作符
+function myNew(func,args){
+	let o={};
+	o._proto_=func.prototype;
+	func.apply(o,args);
+	return o;
+}
+console.log(typeof Object);
+</script>
+</body>
+</html>

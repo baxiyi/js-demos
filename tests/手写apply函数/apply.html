@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>apply</title>
+</head>
+<body>
+	<script>
+		//手写实现apply:主要是改变fun中this的指向，这里给obj新增加一个fn方法（把this赋值给fn）
+		//这样通过obj.fn()调用时，fn()中this指向obj
+		Function.prototype.myApply=function(obj,...args){
+			obj.fn=this;
+			obj.fn(...args);
+			delete obj.fn;
+		}
+		var a=2;
+		function func(num1,num2){
+			console.log(this.a+num1+num2);
+		}
+		var obj={
+			a:1
+		}
+		func.myApply(obj,1,2);
+	</script>
+</body>
+</html>

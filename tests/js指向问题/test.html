@@ -41,12 +41,12 @@
 		const obj=new Person(15);
 		console.log(obj.age);//15
 		*/
-		//箭头函数中的this:箭头函数没有自己的this，它的this指向它外面一层的函数
+		//箭头函数中的this:箭头函数没有自己的this，它的this取决于它外面一层的函数
 		/*
 		const obj={
 			fun1(){
 				return ()=>{
-					console.log(this===obj);
+					console.log(this===obj); //true
 				}
 			}
 		}
@@ -57,7 +57,7 @@
 		/*
 		let obj={};
 		function fun(){
-			console.log(this===obj);
+			console.log(this===obj);//true
 		}
 		let fun1=fun.bind(obj);
 		fun1();

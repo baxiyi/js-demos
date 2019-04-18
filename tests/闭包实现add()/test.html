@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+	<script>
+		//闭包实现add()函数，第一次调用输出1,第二次调用输出2....
+		function add(){
+			let cnt=0;
+			return function(){
+				cnt++;
+				console.log(cnt);
+			}
+		}
+		let fun=add();
+		fun();//此时add()的作用域仍存在，所以会对cnt++
+		fun();
+	</script>
+</body>
+</html>

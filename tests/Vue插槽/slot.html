@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>slot</title>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+		<base-layout id="main">
+		<template v-slot:header>
+			<h1>slot title</h1>
+		</template>
+		<template v-slot:default>
+			<p>para1</p>
+			<p>para2</p>
+		</template>
+		<template v-slot:footer>
+			<p>information</p>
+		</template>
+	</base-layout>
+	<script>
+		Vue.component('base-layout',{
+			template:`
+				<div class="container">
+					<header>
+						<slot name="header"></slot>
+					</header><!-- /header -->
+					<article>
+						<slot></slot>
+					</article>
+					<footer>
+						<slot name="footer"></slot>
+					</footer>
+				</div>
+			`
+		})
+		let app=new Vue({
+			el:"#main"
+		})
+	</script>
+</body>
+</html>
