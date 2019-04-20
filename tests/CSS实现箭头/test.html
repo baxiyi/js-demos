@@ -4,6 +4,8 @@
 	<meta charset="UTF-8">
 	<title>test</title>
 	<style>
+		/*思路是先画一个实心三角形，然后添加一个after伪元素，伪元素为小一号的实心三角形，重叠部分设为背景色，就可以实现箭头*/
+		/*需要注意的是子元素定位时，是相对于父元素content定位的，而父元素只有border，所以需要经过traslate变化才能将子元素实现水平居中，垂直方向靠底*/
 		#triangle{
 			position:relative;
 			width: 0;
