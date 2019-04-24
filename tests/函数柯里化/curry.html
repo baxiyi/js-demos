@@ -7,6 +7,8 @@
 <body>
 	<script>
 		//函数柯里化就是创建一个已经设置好一个或多个参数的函数
+		//简单的柯里化
+		/*
 		function curry(fn){
 			let args=[].slice.call(arguments,1);
 			return function(){
@@ -20,6 +22,26 @@
 		}
 		let curriedAdd=curry(add,3);
 		console.log(curriedAdd(6));
+		*/
+		//柯里化实现add(1)(2,3)(4)(5),共5个参数
+		function curry(fn,args=[]){
+			return function(...innerargs){
+				let finalArgs=[...args,...innerargs];
+				//console.log(finalArgs.length);
+				//fn.length:fn参数的个数
+				if(finalArgs.length===fn.length){
+					return fn.apply(null,finalArgs);
+				}
+				else{
+					return curry(fn,finalArgs);
+				}
+			}
+		}
+		function add(num1,num2,num3,num4,num5){
+			return num1+num2+num3+num4+num5;
+		}
+		let curriedAdd=curry(add);
+		console.log(curriedAdd(1)(2)(3)(4,5));
 	</script>
 </body>
 </html>
