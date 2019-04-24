@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>curry</title>
+</head>
+<body>
+	<script>
+		//函数柯里化就是创建一个已经设置好一个或多个参数的函数
+		function curry(fn){
+			let args=[].slice.call(arguments,1);
+			return function(){
+				let innerargs=[].slice.call(arguments);
+				let finalArgs=args.concat(innerargs);
+				return fn.apply(null,finalArgs);
+			}
+		}
+		function add(num1,num2){
+			return num1+num2;
+		}
+		let curriedAdd=curry(add,3);
+		console.log(curriedAdd(6));
+	</script>
+</body>
+</html>
