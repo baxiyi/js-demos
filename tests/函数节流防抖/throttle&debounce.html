@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>节流和防抖</title>
+</head>
+<body>
+	<script>
+		//节流为了防止一段时间内多次触发一个事件，只能执行一次
+		function throttle(fn,interval){
+			let canRun=true;
+			return function(){
+				if(!canRun)
+					return;
+				canRun=false;
+				setTimeout(function(){
+					fn.apply(this,arguments);
+					canRun=true;
+				},interval);
+			}
+		}
+		//防抖：频发触发任务时，只有任务触发间隔大于规定时间才能执行
+		function debounce(fn,interval){
+			let id=null;
+			return function(){
+				clearTimeout(id);
+				setTimeout(function(){
+					fn.apply(this,arguments);
+				}, interval);
+			}
+
+		}
+	</script>
+	
+</body>
+</html>
