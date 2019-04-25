@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>dragging</title>
+	<style>
+		.drag{
+			position: absolute;
+			width:100px;
+			height: 100px;
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="drag">
+		
+	</div>
+	<script>
+		function dragDrop(){
+			let dragging=null;
+			let diffX=0,diffY=0;
+			console.log("1");
+			function handler(event){
+				switch (event.type) {
+					case "mousedown":
+						if(event.target.className!=="undefined"&&event.target.className.indexOf('drag')!==-1){
+							dragging=event.target;
+							diffX=event.clientX-dragging.offsetLeft;
+							diffY=event.clientY-dragging.offsetTop;
+						}
+						
+						break;
+					case "mousemove":
+						if(dragging!==null){
+							dragging.style.left=(event.clientX-diffX)+"px";
+							dragging.style.top=(event.clientY-diffY)+"px";
+						}
+						break;
+					case "mouseup":
+						dragging=null;
+						break;
+					default:
+						break;
+				}
+			}
+			return {
+				enable:function(){
+					//这里需要注意是给document添加，是一种事件委托的思想，这样可以使鼠标范围移除元素时，仍可实现拖动
+					document.addEventListener("mousedown", handler, false);
+					document.addEventListener("mousemove",handler,false);
+					document.addEventListener("mouseup",handler,false);
+				},
+				disable:function(){
+					document.removeEventListener("mousedown", handler);
+					document.removeEventListener("mousemove",handler);
+					document.removeEventListener("mouseup",handler);
+				}
+			};
+		}
+		let dragFunc=dragDrop();
+		dragFunc.enable();
+	</script>
+</body>
+</html>
