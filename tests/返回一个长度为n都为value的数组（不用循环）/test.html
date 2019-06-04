@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+	<script>
+		//方法1：用递归
+		/*
+		function solve(value,n){
+			let arr=[];
+			helper(0,value,n,arr);
+			return arr;
+		}
+		function helper(i,value,n,arr){
+			if(i<n){
+				arr.push(value);
+				helper(++i,value,n,arr);
+			}
+		}
+		*/
+		//方法二：fill方法
+		function solve(value,n){
+			return new Array(n).fill(value);
+		}
+		console.log(solve(5,10));
+	</script>
+</body>
+</html>

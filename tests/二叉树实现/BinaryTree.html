@@ -91,6 +91,21 @@ class BinaryTree{
 			}
 		}
 	}
+	depth(root){
+		if(root===null)
+			return 0;
+		return Math.max(depth(root.left),depth(root.right))+1;
+	}
+	isBalanced(root){
+		if(root===null)
+			return true;
+		let leftHeight=depth(root.left);
+		let rightHeight=depth(root.right);
+		if(leftHeight-rightHeight>1||leftHeight-rightHeight<-1)
+			return false;
+		else
+			return isBalanced(root.left)&&isBalanced(root.right);
+	}
 
 }
 </script>

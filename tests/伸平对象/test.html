@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+	<script>
+		
+var t = {
+ n : {
+  k : 1,
+  y : 2,
+  d: {
+   a:1,
+   b:2
+  } 
+ },
+ b : 3
+};
+let res={};
+(function solve(name,obj){
+	for(var key in obj){
+		if(obj[key] instanceof Object){
+			solve(name+"."+key,obj[key]);
+		}
+		else{
+			res[name+"."+key]=obj[key];
+		}
+	}
+})("t",t);
+console.log(res);
+	</script>
+</body>
+</html>

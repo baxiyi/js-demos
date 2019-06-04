@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>layout</title>
+	<style>
+		/*利用BFC清除与浮动元素的重叠*/
+		/*
+		#left{
+			width:100px;
+			height:500px;
+			background-color: red;
+			float: left;
+		}
+		#right{
+			width:100px;
+			height:500px;
+			background-color: red;
+			float: right;
+		}
+		#main{
+			height:500px;
+			background-color: green;
+			overflow: hidden;
+		}
+		*/
+		/*flex布局，两边设置basis，中间grow为1*/
+		/*
+		body{
+			display: flex;
+
+		}
+		#left{
+			flex-basis: 100px;
+			height:500px;
+			background-color: red;
+		}
+		#right{
+			flex-basis: 100px;
+			height: 500px;
+			background-color: red;
+		}
+		#main{
+			flex-grow: 1;
+			height: 500px;
+			background-color: green;
+		}
+		*/
+	</style>
+</head>
+<body>
+	<div id="left"></div>
+	<div id="main"></div>
+	<div id="right"></div>
+</body>
+</html>

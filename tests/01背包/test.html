@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+	<script>
+		//01背包问题
+		//在1000元的预算上，arr1为每个物品的价格，arr2为它们对应的热度，
+		//如何在1000元内购买物品使得总热度最高，求出最高热度
+		let sum=1000;
+		let arr1=[600,450,200,300,180,100];
+		let arr2=[10,8,6,5,4,3];
+		let dp=new Array(arr2.length+1);
+		for(let i=0;i<arr2.length+1;i++){
+			dp[i]=new Array(1001);
+		}
+		for(let i=0;i<dp.length;i++)
+			dp[i][0]=0;
+		for(let i=0;i<dp[0].length;i++)
+			dp[0][i]=0;
+		for(let i=1;i<dp.length;i++){
+			for(let j=1;j<dp[0].length;j++){
+				if(arr1[i-1]>j)
+					dp[i][j]=dp[i-1][j];
+				else
+					dp[i][j]=Math.max(dp[i-1][j],dp[i-1][j-arr1[i-1]]+arr2[i-1]);//注意访问arr1和arr2的时候下标必须-1，因为循环是从1开始的
+			}
+		}
+		maxValue=dp[arr2.length][1000];
+		console.log(maxValue);
+	</script>
+</body>
+</html>
