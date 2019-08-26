@@ -5,8 +5,8 @@
 	<title>layout</title>
 	<style>
 		/*利用BFC清除与浮动元素的重叠*/
-		/*
-		#left{
+		
+		/* #left{
 			width:100px;
 			height:500px;
 			background-color: red;
@@ -22,8 +22,8 @@
 			height:500px;
 			background-color: green;
 			overflow: hidden;
-		}
-		*/
+		} */
+		
 		/*flex布局，两边设置basis，中间grow为1*/
 		/*
 		body{
@@ -46,11 +46,70 @@
 			background-color: green;
 		}
 		*/
+		/*双飞翼布局*/
+		.main-container {
+			width: 100%;
+			float: left;
+			background-color: red;
+		}
+		.main {
+			margin-left: 200px;
+			margin-right: 200px;
+			height: 500px;
+			background-color: blue;
+		}
+		.left {
+			float: left;
+			margin-left: -100%;
+			height: 500px;
+			width: 200px;
+			background-color: green;
+		}
+		.right {
+			float: left;
+			width: 200px;
+			height: 500px;
+			margin-left: -200px;
+			background-color: yellow;
+		}
+		/*圣杯布局*/
+		/* .container {
+			padding-left: 200px;
+			padding-right: 200px;
+			overflow: hidden;
+			background-color: green;
+		}
+		.main {
+			float: left;
+			width: 100%;
+			background-color: blue;
+			height: 500px;
+		}
+		.left {
+			float: left;
+			width: 200px;
+			height: 500px;
+			margin-left: -100%;
+			position: relative;
+			left: -200px;
+			background-color: red;
+		}
+		.right {
+			float: left;
+			width: 200px;
+			height: 500px;
+			margin-left: -200px;
+			position: relative;
+			right: -200px;
+			background-color: yellow;
+		} */
 	</style>
 </head>
 <body>
-	<div id="left"></div>
-	<div id="main"></div>
-	<div id="right"></div>
+	<div class="main-container">
+		<div class="main"></div>
+	</div>
+	<div class="left"></div>
+	<div class="right"></div>
 </body>
 </html>
