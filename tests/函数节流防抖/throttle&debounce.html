@@ -13,7 +13,7 @@
 				if(!canRun)
 					return;
 				canRun=false;
-				setTimeout(()=>{
+				setTimeout(() => {
 					fn.apply(this,arguments);
 					canRun=true;
 				},interval);
@@ -24,7 +24,7 @@
 			let id=null;
 			return function(){
 				clearTimeout(id);
-				setTimeout(()=>{
+				setTimeout(() => {
 					fn.apply(this,arguments);
 				}, interval);
 			}
