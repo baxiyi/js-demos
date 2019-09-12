@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS进度条</title>
+  <style>
+    /* transition实现 */
+    /* .wrap {
+      width: 200px;
+      height: 10px;
+      border: black 1px solid;
+      border-radius: 2px;
+    }
+    .loading {
+      width: 0;
+    }
+    .loading-active {
+      width: 100%;
+      height: 100%;
+      background-color: red;
+      border-radius: 2px;
+      transition: width 10s ease-in 1s;
+    } */
+    /* aniamtin实现进度条 */
+    @keyframes load {
+      from {
+        width: 0%;
+      }
+      to {
+        width: 100%;
+      }
+    }
+    .wrap {
+      width: 200px;
+      height: 10px;
+      border: 1px solid black;
+      border-radius: 2px;
+    }
+    .loading {
+      /* animation: load 10s linear 1s 3 forwards reverse; */
+      width: 0;
+      animation: load 10s linear 1s forwards;
+      background-color: red;
+      background-origin: content-box;
+      height: 100%;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="loading"></div>
+  </div>
+  <p>0%</p>
+  <script>
+    // function load() {
+    //   document.querySelector('.loading').className = "loading-active";
+    // }
+    // window.setTimeout(load, 1000);
+    let para = document.querySelector('p');
+    let loading = document.querySelector('.loading');
+    loading.addEventListener('webkitAnimationStart', function() {
+      let percent = 0;
+      let timer = window.setInterval(function() {
+        percent++;
+        if(percent === 100) {
+          clearInterval(timer);
+        }
+        para.innerHTML = `${percent}%`;
+      }, 100);
+    })
+  </script>
+</body>
+</html>
